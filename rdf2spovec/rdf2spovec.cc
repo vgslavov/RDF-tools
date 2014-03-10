@@ -61,45 +61,45 @@ void write_sig(string, int, unsigned long long);
 int
 main(int argc, char *argv[])
 {
-	int ch;
+    int ch;
     int iflag, oflag, Gflag;
     string infile, outfile, pattern;
 
-    iflag = oflag = Gflag = 0;	
+    iflag = oflag = Gflag = 0;  
     pattern = "0";
 
-	while ((ch = getopt(argc, argv, "Gi:o:P:p:hv")) != -1)
-		switch(ch) {
-		case 'G':
-			Gflag = 1;
-			break;
-		case 'i':
-			iflag = 1;
-			infile = optarg;
-			break;
-		case 'o':
-			oflag = 1;
-			outfile = optarg;
-			break;
-		case 'P':
+    while ((ch = getopt(argc, argv, "Gi:o:P:p:hv")) != -1)
+        switch(ch) {
+        case 'G':
+            Gflag = 1;
+            break;
+        case 'i':
+            iflag = 1;
+            infile = optarg;
+            break;
+        case 'o':
+            oflag = 1;
+            outfile = optarg;
+            break;
+        case 'P':
             irrpoly = strtol(optarg, NULL, 10);
-			break;
-		case 'p':
+            break;
+        case 'p':
             pattern = optarg;
-			break;
-		case 'v':
-			verbose = true;
-			break;
-		case 'h':
-		case '?':
-		default:
-			usage();
-			break;
-		}
-	argc -= optind;
-	argv += optind;
+            break;
+        case 'v':
+            verbose = true;
+            break;
+        case 'h':
+        case '?':
+        default:
+            usage();
+            break;
+        }
+    argc -= optind;
+    argv += optind;
 
-	if (iflag == 0 || oflag == 0) usage();
+    if (iflag == 0 || oflag == 0) usage();
 
     // pattern 0 (all) by default
     if (pattern == "0") {
@@ -471,18 +471,18 @@ write_sig(string outfile, int graph_id, unsigned long long seek_loc)
 void
 usage(void)
 {
-	cout << "Usage: " << __progname << " [-h] [options...]\n\n";
+    cout << "Usage: " << __progname << " [-h] [options...]\n\n";
 
-	cout << "OPTIONS:\n"
-	<< "\t-i\t<input ntriples file>\n"
-	<< "\t-o\t<output sig file>\n"
-	<< "\t-P\t<irreducible POLY>\n\n"
-	<< "\t-p\t<pattern> (default 0)\n"
-	<< "\t-G\tprocess as one giant graph\n\n"
-	<< "\t-h\tprint help/usage\n"
-	<< "\t-v\tverbose\n\n"
+    cout << "OPTIONS:\n"
+    << "\t-i\t<input ntriples file>\n"
+    << "\t-o\t<output sig file>\n"
+    << "\t-P\t<irreducible POLY>\n\n"
+    << "\t-p\t<pattern> (default 0)\n"
+    << "\t-G\tprocess as one giant graph\n\n"
+    << "\t-h\tprint help/usage\n"
+    << "\t-v\tverbose\n\n"
 
-	<< "PATTERNS:\n"
+    << "PATTERNS:\n"
     << "\t0\tALL (default)\n"
     << "\t1\ts,p,o\n"
     << "\t2\ts,p,?\n"
@@ -491,5 +491,5 @@ usage(void)
     << "\t5\ts,?,?\n"
     << "\t6\t?,p,?\n"
     << "\t7\t?,?,o\n";
-	exit(0);
+    exit(0);
 }
