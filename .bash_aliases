@@ -1,19 +1,30 @@
 alias cachec="/home/vsfgd/bin/run_clear_cache"
 
 # N-Triples aliases from http://blog.datagraph.org/2010/03/grepping-ntriples
+
+# 1. Measuring N-Triples
+# cat myfile.nt | rdf-count
+# cat myfile.nt | rdf-lengths-avg
+# cat myfile.nt | rdf-lengths | avg
+
 alias rdf-count="awk '/^\s*[^#]/ { n += 1 } END { print n }'"
 alias rdf-lengths="awk '/^\s*[^#]/ { print length }'"
 alias rdf-length-avg="awk '/^\s*[^#]/ { n += 1; s += length } END { print s/n }'"
+alias avg="awk '\''{ s += $1 } END { print s / NR }'\'"
 alias rdf-length-max="awk 'BEGIN { n=0 } /^\s*[^#]/ { if (length>n) n=length } END { print n }'"
 alias rdf-length-min="awk 'BEGIN { n=1e9 } /^\s*[^#]/ { if (length>0 && length<n) n=length } END { print (n<1e9 ? n : 0) }'"
+
+# 2. Parsing N-Triples
+# count the # of subjects:
+# cat myfile.nt | rdf-subjects | sort | uniq | wc -l
+
 alias rdf-subjects="awk '/^\s*[^#]/ { print \$1 }' | uniq"
 alias rdf-predicates="awk '/^\s*[^#]/ { print \$2 }' | uniq"
 alias rdf-objects="awk '/^\s*[^#]/ { ORS=\"\"; for (i=3;i<=NF-1;i++) print \$i \" \"; print \"\n\" }' | uniq"
 alias rdf-datatypes="awk -F'\x5E' '/\"\^\^</ { print substr(\$3, 2, length(\$3)-4) }' | uniq"
 
-alias avg="awk '\''{ s += $1 } END { print s / NR }'\'"
-
-# rapper aliases from http://blog.datagraph.org/2010/04/transmuting-ntriples
+# Rapper aliases from http://blog.datagraph.org/2010/04/transmuting-ntriples
+# Convert b/w formats
 alias any2nt="rapper -i guess -o ntriples"         # Anything to N-Triples
 alias any2ttl="rapper -i guess -o turtle"          # Anything to Turtle
 alias any2rdf="rapper -i guess -o rdfxml-abbrev"   # Anything to RDF/XML
